@@ -42,7 +42,16 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+
+if(strpos($_SERVER['SERVER_NAME'], 'local') !== FALSE) { 
+  define('ENVIRONMENT', 'local');
+}
+elseif(strpos($_SERVER['SERVER_NAME'], 'dev.') === 0) { 
+  define('ENVIRONMENT', 'development');
+}
+else {
+  define('ENVIRONMENT', 'production');
+}
 
 /*
  *---------------------------------------------------------------
@@ -54,7 +63,9 @@
  */
 switch (ENVIRONMENT)
 {
-	case 'development':
+
+	case 'local' :
+	case 'development' :
 		error_reporting(-1);
 		ini_set('display_errors', 1);
 	break;
